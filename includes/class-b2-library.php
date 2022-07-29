@@ -2,74 +2,87 @@
 class B2_Private_Files_B2_Library {
 
     public static function authorize($application_key_id, $application_key){
+
 		$credentials = base64_encode($application_key_id . ":" . $application_key);
 		$url = "https://api.backblazeb2.com/b2api/v2/b2_authorize_account";
 		
-		$session = curl_init($url);
-		
-		// Add headers
-		$headers = array();
-		$headers[] = "Accept: application/json";
-		$headers[] = "Authorization: Basic " . $credentials;
-		curl_setopt($session, CURLOPT_HTTPHEADER, $headers);  // Add headers
-		
-		curl_setopt($session, CURLOPT_HTTPGET, true);  // HTTP GET
-		curl_setopt($session, CURLOPT_RETURNTRANSFER, true); // Receive server response
-		$server_output = curl_exec($session);
-		curl_close ($session);
-		return json_decode($server_output, true);
+		$apiResponse = wp_remote_post( $url,
+			[
+				'method'    => 'POST',
+				'headers'   => [
+					'Accept' => 'application/json',
+					'Authorization' => 'Basic ' . $credentials,
+				],
+			]
+		);
+		$apiBody     = json_decode( wp_remote_retrieve_body( $apiResponse ), true);
+		return $apiBody;
 	} // b2_authorize
 
 	public static function get_upload_url($api_url, $auth_token, $bucket_id){
 
-		$session = curl_init($api_url .  "/b2api/v2/b2_get_upload_url");
+		$endpoint = $api_url .  "/b2api/v2/b2_get_upload_url";
+ 
+		$body = [
+			'bucketId'  => $bucket_id
+		];
+		 
+		$body = wp_json_encode( $body );
+		 
+		$options = [
+			'body'        => $body,
+			'headers'     => [
+				'Content-Type' => 'application/json',
+				'Authorization' => $auth_token
+			],
+			'timeout'     => 60,
+			'redirection' => 5,
+			'blocking'    => true,
+			'httpversion' => '1.0',
+			'sslverify'   => false,
+			'data_format' => 'body',
+		];
+		 
+		$apiResponse = wp_remote_post( $endpoint, $options );
+		
+		$apiBody = json_decode( wp_remote_retrieve_body( $apiResponse ), true);
+		return $apiBody;
 
-		// Add post fields
-		$data = array("bucketId" => $bucket_id);
-		$post_fields = json_encode($data);
-		curl_setopt($session, CURLOPT_POSTFIELDS, $post_fields); 
-
-		// Add headers
-		$headers = array();
-		$headers[] = "Authorization: " . $auth_token;
-		curl_setopt($session, CURLOPT_HTTPHEADER, $headers); 
-
-		curl_setopt($session, CURLOPT_POST, true); // HTTP POST
-		curl_setopt($session, CURLOPT_RETURNTRANSFER, true);  // Receive server response
-		$server_output = curl_exec($session); // Let's do this!
-		curl_close ($session); // Clean up
-		return json_decode($server_output, true);
 	}
 
 	public static function upload_file(
 			$my_file, $upload_url, $upload_auth_token, 
 			$bucket_id, $content_type, $file_name
 		){
+		$endpoint = $upload_url;
 		$handle = fopen($my_file, 'r');
 		$read_file = fread($handle,filesize($my_file));
-
 		$sha1_of_file_data = sha1_file($my_file);
-
-		$session = curl_init($upload_url);
-
-		// Add read file as post field
-		curl_setopt($session, CURLOPT_POSTFIELDS, $read_file); 
-
-		// Add headers
-		$headers = array();
-		$headers[] = "Authorization: " . $upload_auth_token;
-		$headers[] = "X-Bz-File-Name: " . $file_name;
-		$headers[] = "Content-Type: " . $content_type;
-		$headers[] = "X-Bz-Content-Sha1: " . $sha1_of_file_data;
-		$headers[] = "X-Bz-Info-Author: " . "unknown";
-		$headers[] = "X-Bz-Server-Side-Encryption: " . "AES256";
-		curl_setopt($session, CURLOPT_HTTPHEADER, $headers); 
-
-		curl_setopt($session, CURLOPT_POST, true); // HTTP POST
-		curl_setopt($session, CURLOPT_RETURNTRANSFER, true);  // Receive server response
-		$server_output = curl_exec($session); // Let's do this!
-		curl_close ($session); // Clean up
-		return json_decode($server_output, true); // Tell me about the rabbits, George!
+		
+		$body = $read_file;
+			
+		$options = [
+			'body'        => $body,
+			'headers'     => [
+				'Authorization' => $upload_auth_token,
+				'X-Bz-File-Name' => $file_name,
+				'Content-Type' => $content_type,
+				'X-Bz-Content-Sha1' => $sha1_of_file_data,
+				'X-Bz-Info-Author' => 'unknown',
+				'X-Bz-Server-Side-Encryption' => 'AES256'
+			],
+			'timeout'     => 60,
+			'redirection' => 5,
+			'blocking'    => true,
+			'httpversion' => '1.0',
+			'sslverify'   => true,
+			'data_format' => 'body',
+		];
+			
+		$apiResponse = wp_remote_post( $endpoint, $options );
+		
+		$apiBody = json_decode( wp_remote_retrieve_body( $apiResponse ), true);
+		return $apiBody;			
 	}
 
 	public static function get_mime_type($filename) {

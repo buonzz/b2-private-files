@@ -75,7 +75,7 @@ Its possible, but its not optimized for that use-case. As the files token is bei
 
 == Changelog ==
 
-= 1.0 =
+= 1.0.0 =
 * ability to configure B2 settings
 * ability to upload files to B2.
 * ability to render button shortcode
