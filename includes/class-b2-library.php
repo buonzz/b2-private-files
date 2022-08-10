@@ -158,23 +158,33 @@ class B2_Private_Files_B2_Library {
 
      public static function delete_file_version($api_url, $auth_token, $file_id, $file_name){
 
-		$session = curl_init($api_url .  "/b2api/v2/b2_delete_file_version");
-
-		// Add post fields
-		$data = array("fileId" => $file_id, "fileName" => $file_name);
-		$post_fields = json_encode($data);
-		curl_setopt($session, CURLOPT_POSTFIELDS, $post_fields); 
-
-		// Add headers
-		$headers = array();
-		$headers[] = "Authorization: " . $auth_token;
-		curl_setopt($session, CURLOPT_HTTPHEADER, $headers); 
-
-		curl_setopt($session, CURLOPT_POST, true); // HTTP POST
-		curl_setopt($session, CURLOPT_RETURNTRANSFER, true);  // Receive server response
-		$server_output = curl_exec($session); // Let's do this!
-		curl_close ($session); // Clean up
-		return json_decode($server_output, true); // Tell me about the rabbits, George!
+		$endpoint = $api_url .  "/b2api/v2/b2_delete_file_version";
+ 
+		$body = [
+			'fileId'  => $file_id,
+			'fileName' => $file_name
+		];
+		 
+		$body = wp_json_encode( $body );
+		 
+		$options = [
+			'body'        => $body,
+			'headers'     => [
+				'Content-Type' => 'application/json',
+				'Authorization' => $auth_token
+			],
+			'timeout'     => 60,
+			'redirection' => 5,
+			'blocking'    => true,
+			'httpversion' => '1.0',
+			'sslverify'   => false,
+			'data_format' => 'body',
+		];
+		 
+		$apiResponse = wp_remote_post( $endpoint, $options );
+		
+		$apiBody = json_decode( wp_remote_retrieve_body( $apiResponse ), true);
+		return $apiBody;
 	}
 
     public static function get_link($download_url, $bucket_name, $file_name, $token){
@@ -217,23 +227,32 @@ class B2_Private_Files_B2_Library {
 
     public static function list_file_names($api_url, $auth_token, $bucket_id){
 
-		$session = curl_init($api_url .  "/b2api/v2/b2_list_file_names");
-
-		// Add post fields
-		$data = array("bucketId" => $bucket_id);
-		$post_fields = json_encode($data);
-		curl_setopt($session, CURLOPT_POSTFIELDS, $post_fields); 
-
-		// Add headers
-		$headers = array();
-		$headers[] = "Authorization: " . $auth_token;
-		curl_setopt($session, CURLOPT_HTTPHEADER, $headers); 
-
-		curl_setopt($session, CURLOPT_POST, true); // HTTP POST
-		curl_setopt($session, CURLOPT_RETURNTRANSFER, true);  // Receive server response
-		$server_output = curl_exec($session); // Let's do this!
-		curl_close ($session); // Clean up
-		return json_decode($server_output, true);
+		$endpoint = $api_url .  "/b2api/v2/b2_list_file_names";
+ 
+		$body = [
+			'bucketId'  => $bucket_id
+		];
+		 
+		$body = wp_json_encode( $body );
+		 
+		$options = [
+			'body'        => $body,
+			'headers'     => [
+				'Content-Type' => 'application/json',
+				'Authorization' => $auth_token
+			],
+			'timeout'     => 60,
+			'redirection' => 5,
+			'blocking'    => true,
+			'httpversion' => '1.0',
+			'sslverify'   => false,
+			'data_format' => 'body',
+		];
+		 
+		$apiResponse = wp_remote_post( $endpoint, $options );
+		
+		$apiBody = json_decode( wp_remote_retrieve_body( $apiResponse ), true);
+		return $apiBody;
 	}
 
 	/**
@@ -246,24 +265,33 @@ class B2_Private_Files_B2_Library {
 	 */
 	public static function get_download_authorization($api_url, $auth_token, $bucket_id, $file_name_prefix = "", $valid_duration = 86400){
 
-		$session = curl_init($api_url .  "/b2api/v2/b2_get_download_authorization");
-
-		// Add post fields
-		$data = array("bucketId" => $bucket_id, 
-					"validDurationInSeconds" => $valid_duration, 
-					"fileNamePrefix" => $file_name_prefix);
-		$post_fields = json_encode($data);
-		curl_setopt($session, CURLOPT_POSTFIELDS, $post_fields); 
-
-		// Add headers
-		$headers = array();
-		$headers[] = "Authorization: " . $auth_token;
-		curl_setopt($session, CURLOPT_HTTPHEADER, $headers); 
-
-		curl_setopt($session, CURLOPT_POST, true); // HTTP POST
-		curl_setopt($session, CURLOPT_RETURNTRANSFER, true);  // Receive server response
-		$server_output = curl_exec($session); // Let's do this!
-		curl_close ($session); // Clean up
-		return json_decode($server_output, true); // Tell me about the rabbits, George!
+		$endpoint = $api_url .  "/b2api/v2/b2_get_download_authorization";
+ 
+		$body = [
+			'bucketId'  => $bucket_id,
+			'validDurationInSeconds' => $valid_duration,
+			'fileNamePrefix' => $file_name_prefix
+		];
+		 
+		$body = wp_json_encode( $body );
+		 
+		$options = [
+			'body'        => $body,
+			'headers'     => [
+				'Content-Type' => 'application/json',
+				'Authorization' => $auth_token
+			],
+			'timeout'     => 60,
+			'redirection' => 5,
+			'blocking'    => true,
+			'httpversion' => '1.0',
+			'sslverify'   => false,
+			'data_format' => 'body',
+		];
+		 
+		$apiResponse = wp_remote_post( $endpoint, $options );
+		
+		$apiBody = json_decode( wp_remote_retrieve_body( $apiResponse ), true);
+		return $apiBody;
 	}
 }
