@@ -6,9 +6,8 @@ class B2_Private_Files_B2_Library {
 		$credentials = base64_encode($application_key_id . ":" . $application_key);
 		$url = "https://api.backblazeb2.com/b2api/v2/b2_authorize_account";
 		
-		$apiResponse = wp_remote_post( $url,
+		$apiResponse = wp_remote_get( $url,
 			[
-				'method'    => 'POST',
 				'headers'   => [
 					'Accept' => 'application/json',
 					'Authorization' => 'Basic ' . $credentials,
@@ -204,6 +203,7 @@ class B2_Private_Files_B2_Library {
             $options['b2_private_files_account_id'],
             $options['b2_private_files_application_key']
         );
+
 
         $res = B2_Private_Files_B2_Library::list_file_names(
             $authorize['apiUrl'], 
