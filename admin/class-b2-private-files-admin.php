@@ -269,6 +269,10 @@ class B2_Private_Files_Admin {
 					$options['b2_private_files_bucket_id'], $content_type, $_FILES["uploadFile"]["name"]
 				);
 
+				if(isset($upload_resp['code']) && $upload_resp['code'] == 'bad_request'){
+					$error_message = $upload_resp['message'];
+				}
+
 				// delete it once uploaded to b2
 				unlink( $target_file);
 

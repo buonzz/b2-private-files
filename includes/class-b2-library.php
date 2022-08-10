@@ -57,6 +57,7 @@ class B2_Private_Files_B2_Library {
 		$handle = fopen($my_file, 'r');
 		$read_file = fread($handle,filesize($my_file));
 		$sha1_of_file_data = sha1_file($my_file);
+		$encoded_filename = urlencode($file_name);
 		
 		$body = $read_file;
 			
@@ -64,7 +65,7 @@ class B2_Private_Files_B2_Library {
 			'body'        => $body,
 			'headers'     => [
 				'Authorization' => $upload_auth_token,
-				'X-Bz-File-Name' => $file_name,
+				'X-Bz-File-Name' => $encoded_filename,
 				'Content-Type' => $content_type,
 				'X-Bz-Content-Sha1' => $sha1_of_file_data,
 				'X-Bz-Info-Author' => 'unknown',
@@ -81,6 +82,7 @@ class B2_Private_Files_B2_Library {
 		$apiResponse = wp_remote_post( $endpoint, $options );
 		
 		$apiBody = json_decode( wp_remote_retrieve_body( $apiResponse ), true);
+
 		return $apiBody;			
 	}
 
@@ -204,13 +206,11 @@ class B2_Private_Files_B2_Library {
             $options['b2_private_files_application_key']
         );
 
-
         $res = B2_Private_Files_B2_Library::list_file_names(
             $authorize['apiUrl'], 
             $authorize['authorizationToken'], 
             $options['b2_private_files_bucket_id']
         );
-
 
         foreach($res['files'] as $file){
             $output[] =  array(
