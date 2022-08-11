@@ -148,28 +148,28 @@ class B2_Private_Files_Admin {
 	function render_account_id() {
 		$options = get_option( 'b2_private_files_settings' );
 		?>
-		<input type='text' name='b2_private_files_settings[b2_private_files_account_id]' value='<?php echo $options['b2_private_files_account_id']; ?>'/>
+		<input type='text' name='b2_private_files_settings[b2_private_files_account_id]' value='<?php echo esc_attr($options['b2_private_files_account_id']); ?>'/>
 		<?php
 	}
 	
 	function render_application_key() {
 		$options = get_option( 'b2_private_files_settings' );
 		?>
-		<input type='text' name='b2_private_files_settings[b2_private_files_application_key]' value='<?php echo $options['b2_private_files_application_key']; ?>'/>
+		<input type='text' name='b2_private_files_settings[b2_private_files_application_key]' value='<?php echo esc_attr($options['b2_private_files_application_key']); ?>'/>
 	<?php
 	}
 
 	function render_bucket_id() {
 		$options = get_option( 'b2_private_files_settings' );
 		?>
-		<input type='text' name='b2_private_files_settings[b2_private_files_bucket_id]' value='<?php echo $options['b2_private_files_bucket_id']; ?>'/>
+		<input type='text' name='b2_private_files_settings[b2_private_files_bucket_id]' value='<?php echo esc_attr($options['b2_private_files_bucket_id']); ?>'/>
 	<?php
 	}
 
 	function render_bucket_name() {
 		$options = get_option( 'b2_private_files_settings' );
 		?>
-		<input type='text' name='b2_private_files_settings[b2_private_files_bucket_name]' value='<?php echo $options['b2_private_files_bucket_name']; ?>'/>
+		<input type='text' name='b2_private_files_settings[b2_private_files_bucket_name]' value='<?php echo esc_attr($options['b2_private_files_bucket_name']); ?>'/>
 	<?php
 	}
 

@@ -2,7 +2,7 @@
     <h1>B2 Private Files - Upload New File</h1>
     <?php if(isset($_GET['message']) && !empty($_GET['message'])){ ?>
     <div class="notice notice-success settings-error">
-        <?php echo $_GET['message']; ?>
+        <?php echo wp_kses($_GET['message'], []); ?>
     </div>
     <?php } ?>
     <form  method="post" enctype="multipart/form-data" action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" class="media-upload-form">
