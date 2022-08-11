@@ -270,7 +270,15 @@ class PrivateFiles_List_Table extends WP_List_Table {
          */
         function usort_reorder($a,$b){
             $orderby = (!empty($_REQUEST['orderby'])) ? $_REQUEST['orderby'] : 'fileName'; //If no sort, default to title
+
+            // sanitize orderby 
+            $orderby = in_array($orderby, ['fileName', 'contentType', 'uploadTimestamp']) ? $orderby  : 'fileName';
+
             $order = (!empty($_REQUEST['order'])) ? $_REQUEST['order'] : 'asc'; //If no order, default to asc
+
+            //sanitize order
+            $order = in_array($order, ['asc', 'desc']) ? $order : 'asc';
+
             $result = strcmp($a[$orderby], $b[$orderby]); //Determine sort order
             return ($order==='asc') ? $result : -$result; //Send final sort direction to usort
         }

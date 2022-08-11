@@ -295,8 +295,8 @@ class B2_Private_Files_Admin {
 	public function on_file_delete(){
 
 		$options = get_option( 'b2_private_files_settings');
-		$fileId = $_GET['fileId'];
-		$fileName = $_GET['fileName'];
+		$fileId = sanitize_key($_GET['fileId']);
+		$fileName = sanitize_file_name($_GET['fileName']);
 
 		// authorize in b2 api
 		$authorize = B2_Private_Files_B2_Library::authorize(
@@ -318,7 +318,7 @@ class B2_Private_Files_Admin {
 	public function on_file_view(){
 
 		$options = get_option( 'b2_private_files_settings');
-		$fileName = $_GET['fileName'];
+		$fileName = sanitize_file_name($_GET['fileName']);
 
 		// authorize in b2 api
 		$authorize = B2_Private_Files_B2_Library::authorize(
@@ -362,7 +362,7 @@ class B2_Private_Files_Admin {
 	public function render_code_page(){
 
 		$options = get_option( 'b2_private_files_settings');
-		$fileName = $_GET['fileName'];
+		$fileName = sanitize_file_name($_GET['fileName']);
 
 		include plugin_dir_path( __FILE__ ) . 'partials/code_page.php';
 	}
