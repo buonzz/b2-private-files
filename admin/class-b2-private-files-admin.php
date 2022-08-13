@@ -221,10 +221,12 @@ class B2_Private_Files_Admin {
 		$upload_dir_info =  wp_upload_dir();
 		$target_dir = $upload_dir_info['path'] . '/';
 		$error_message = '';
-		$content_type = B2_Private_Files_B2_Library::get_mime_type($_FILES["uploadFile"]["name"]);
+		$sanitized_file_name = sanitize_file_name($_FILES["uploadFile"]["name"]);
+		$content_type = B2_Private_Files_B2_Library::get_mime_type($sanitized_file_name);
+		
 
 
-		$target_file = $target_dir . basename($_FILES["uploadFile"]["name"]);
+		$target_file = $target_dir . basename($sanitized_file_name);
 		$uploadOk = 1;
 		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
@@ -266,7 +268,7 @@ class B2_Private_Files_Admin {
 				// upload it
 				$upload_resp = B2_Private_Files_B2_Library::upload_file(
 					$target_file, $upload_url['uploadUrl'], $upload_url['authorizationToken'], 
-					$options['b2_private_files_bucket_id'], $content_type, $_FILES["uploadFile"]["name"]
+					$options['b2_private_files_bucket_id'], $content_type, $sanitized_file_name
 				);
 
 				if(isset($upload_resp['code']) && $upload_resp['code'] == 'bad_request'){
