@@ -77,9 +77,9 @@ class PrivateFiles_List_Table extends WP_List_Table {
         
         //Build row actions
         $actions = array(
-            'shortcode' => sprintf('<a href="%s?page=%s&fileId=%s&fileName=%s">Shortcode</a>', admin_url('admin.php'), 'b2-private-files-code-page',$item['ID'], urlencode($item['fileName'])),
-            'delete'    => sprintf('<a href="%s?&action=%s&fileId=%s&fileName=%s">Delete Permanently</a>', admin_url('admin-post.php'), 'b2_private_files_file_deleted',$item['ID'], urlencode($item['fileName'])),
-            'view'      => sprintf('<a href="%s?action=%s&fileId=%s&fileName=%s" target="_blank">View</a>', admin_url('admin-post.php'), 'b2_private_files_file_viewed',$item['ID'], urlencode($item['fileName'])),
+            'shortcode' => sprintf('<a href="%s?page=%s&fileId=%s&fileName=%s">Shortcode</a>', admin_url('admin.php'), 'b2-private-files-code-page', urlencode($item['ID']), urlencode($item['fileName'])),
+            'delete'    => sprintf('<a href="%s?&action=%s&fileId=%s&fileName=%s">Delete Permanently</a>', admin_url('admin-post.php'), 'b2_private_files_file_deleted', urlencode($item['ID']), urlencode($item['fileName'])),
+            'view'      => sprintf('<a href="%s?action=%s&fileId=%s&fileName=%s" target="_blank">View</a>', admin_url('admin-post.php'), 'b2_private_files_file_viewed', urlencode($item['ID']), urlencode($item['fileName'])),
         );
         
         //Return the title contents

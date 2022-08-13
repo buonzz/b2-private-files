@@ -278,14 +278,14 @@ class B2_Private_Files_Admin {
 				// delete it once uploaded to b2
 				unlink( $target_file);
 
-				wp_redirect( admin_url( 'upload.php?page=b2-private-files-upload-page&message=' . $error_message ) );
+				wp_redirect( admin_url( 'upload.php?page=b2-private-files-upload-page&message=' . urlencode($error_message) ) );
 				exit;
 			} else {
 				$error_message = "Sorry, there was an error uploading your file.";
 			}
 		} 
 
-	  	wp_redirect( admin_url( 'upload.php?page=b2-private-files-upload-page&message='. $error_message ) );
+	  	wp_redirect( admin_url( 'upload.php?page=b2-private-files-upload-page&message='. urlencode($error_message) ) );
         exit;
 	}
 

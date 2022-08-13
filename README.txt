@@ -4,7 +4,7 @@ Donate link: https://www.darwinbiler.com
 Tags: media library, download, premium content, protect assets, digital rights
 Requires at least: 3.0.1
 Tested up to: 6.0.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,8 +75,14 @@ Its possible, but its not optimized for that use-case. As the files token is bei
 
 == Changelog ==
 
+= 1.0.1 =
+* plugin submission requirements / fixes
+* fix bug wherein error message is not showing after upload to b2
+
 = 1.0.0 =
 * ability to configure B2 settings
 * ability to upload files to B2.
 * ability to render button shortcode
 * ability to manage files in B2 (delete and list)
+
+
