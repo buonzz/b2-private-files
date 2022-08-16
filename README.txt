@@ -4,7 +4,7 @@ Donate link: https://www.darwinbiler.com
 Tags: media library, download, premium content, protect assets, digital rights
 Requires at least: 3.0.1
 Tested up to: 6.0.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,9 @@ Its possible, but its not optimized for that use-case. As the files token is bei
 2. New menu item added alongside with standard Library
 
 == Changelog ==
+
+= 1.0.2 =
+* plugin submission requirements / fixes
 
 = 1.0.1 =
 * plugin submission requirements / fixes
