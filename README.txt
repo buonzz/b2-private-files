@@ -1,6 +1,6 @@
 === B2 Private Files ===
 Contributors: darwinbiler
-Donate link: https://www.darwinbiler.com
+Donate link: https://www.buymeacoffee.com/kt7vrlS6F
 Tags: media library, download, premium content, protect assets, digital rights
 Requires at least: 3.0.1
 Tested up to: 6.0.1
