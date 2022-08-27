@@ -17,10 +17,10 @@ import { useBlockProps } from '@wordpress/block-editor';
  */
 export default function save() {
 	return (
-		<p { ...useBlockProps.save() }>
-			{
-				'B2 Private File Download Button – hello from the saved content!'
-			}
-		</p>
+		<div { ...useBlockProps() }>
+			<div class="wp-block-button b2-private-file-button">
+				<a href="#"> Download</a>
+			</div>
+		</div>
 	);
 }

@@ -4,9 +4,9 @@
 	"name": "buonzz/b2-private-file-download-button",
 	"version": "0.1.0",
 	"title": "B2 Private File Download Button",
-	"category": "widgets",
-	"icon": "smiley",
-	"description": "Example block scaffolded with Create Block tool.",
+	"category": "media",
+	"icon": "download",
+	"description": "Display a download button for a token-protected file.",
 	"supports": {
 		"html": false
 	},
