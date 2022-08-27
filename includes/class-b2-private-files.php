@@ -167,6 +167,8 @@ class B2_Private_Files {
 
 		$this->loader->add_action('admin_post_b2_private_files_file_viewed', $plugin_admin, 'on_file_view' );
 		$this->loader->add_action('admin_post_b2_private_files_file_deleted', $plugin_admin, 'on_file_delete' );
+
+		$this->loader->add_action( 'init', $plugin_admin, 'register_download_button_block' );
 	}
 
 	/**

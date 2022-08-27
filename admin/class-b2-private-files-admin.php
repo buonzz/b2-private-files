@@ -91,10 +91,10 @@ class B2_Private_Files_Admin {
 	}
 
 	public function settings_page(){
-		add_options_page( 'B2 Private Files', 
-			'B2 Private Files', 'manage_options', 
-			'b2-private-files-settings-page', 
-			[&$this, 'render_settings_page'] 
+		add_options_page( 'B2 Private Files',
+			'B2 Private Files', 'manage_options',
+			'b2-private-files-settings-page',
+			[&$this, 'render_settings_page']
 		);
 	}
 
@@ -107,7 +107,7 @@ class B2_Private_Files_Admin {
 			[$this, 'section_callback'],
 			'b2-private-files'
 		);
-	
+
 		add_settings_field(
 			'b2_private_files_account_id',
 			__( 'Account ID / Key ID', 'wordpress' ),
@@ -115,7 +115,7 @@ class B2_Private_Files_Admin {
 			'b2-private-files',
 			'b2_private_files_section'
 		);
-	
+
 		add_settings_field(
 			'b2_private_files_application_key',
 			__( 'Application Key', 'wordpress' ),
@@ -151,7 +151,7 @@ class B2_Private_Files_Admin {
 		<input type='text' name='b2_private_files_settings[b2_private_files_account_id]' value='<?php echo esc_attr($options['b2_private_files_account_id']); ?>'/>
 		<?php
 	}
-	
+
 	function render_application_key() {
 		$options = get_option( 'b2_private_files_settings' );
 		?>
@@ -191,9 +191,9 @@ class B2_Private_Files_Admin {
 
 	public function add_upload_page_submenu(){
 		$page = add_submenu_page(
-			'upload.php', 
-			'Add New (Private) - B2 Private Files', 
-			'Add New (Private)', 
+			'upload.php',
+			'Add New (Private) - B2 Private Files',
+			'Add New (Private)',
 			'upload_files',
 			'b2-private-files-upload-page',
 			[&$this, 'render_uploads_page']
@@ -223,7 +223,7 @@ class B2_Private_Files_Admin {
 		$error_message = '';
 		$sanitized_file_name = sanitize_file_name($_FILES["uploadFile"]["name"]);
 		$content_type = B2_Private_Files_B2_Library::get_mime_type($sanitized_file_name);
-		
+
 
 
 		$target_file = $target_dir . basename($sanitized_file_name);
@@ -259,15 +259,15 @@ class B2_Private_Files_Admin {
 
 				// get upload url
 				$upload_url = B2_Private_Files_B2_Library::get_upload_url(
-					$authorize['apiUrl'], 
-					$authorize['authorizationToken'], 
+					$authorize['apiUrl'],
+					$authorize['authorizationToken'],
 					$options['b2_private_files_bucket_id']
 				);
 
 
 				// upload it
 				$upload_resp = B2_Private_Files_B2_Library::upload_file(
-					$target_file, $upload_url['uploadUrl'], $upload_url['authorizationToken'], 
+					$target_file, $upload_url['uploadUrl'], $upload_url['authorizationToken'],
 					$options['b2_private_files_bucket_id'], $content_type, $sanitized_file_name
 				);
 
@@ -283,7 +283,7 @@ class B2_Private_Files_Admin {
 			} else {
 				$error_message = "Sorry, there was an error uploading your file.";
 			}
-		} 
+		}
 
 	  	wp_redirect( admin_url( 'upload.php?page=b2-private-files-upload-page&message='. urlencode($error_message) ) );
         exit;
@@ -307,8 +307,8 @@ class B2_Private_Files_Admin {
 		);
 
 		B2_Private_Files_B2_Library::delete_file_version(
-			$authorize['apiUrl'], 
-			$authorize['authorizationToken'], 
+			$authorize['apiUrl'],
+			$authorize['authorizationToken'],
 			$fileId,
 			$fileName
 		);
@@ -329,7 +329,7 @@ class B2_Private_Files_Admin {
 		);
 
 		$link = B2_Private_Files_B2_Library::get_link(
-			$authorize['downloadUrl'], 
+			$authorize['downloadUrl'],
 			$options['b2_private_files_bucket_name'],
 			$fileName,
 			$authorize['authorizationToken']
@@ -341,9 +341,9 @@ class B2_Private_Files_Admin {
 
 	public function add_library_page_submenu(){
 		$page = add_submenu_page(
-			'upload.php', 
-			'Library (Private) - B2 Private Files', 
-			'Library (Private)', 
+			'upload.php',
+			'Library (Private) - B2 Private Files',
+			'Library (Private)',
 			'upload_files',
 			'b2-private-files-library-page',
 			[&$this, 'render_library_page']
@@ -352,9 +352,9 @@ class B2_Private_Files_Admin {
 
 	public function add_code_page_submenu(){
 		$page = add_submenu_page(
-			null, 
-			'B2 Private Files - Shortcodes', 
-			'Shortcodes', 
+			null,
+			'B2 Private Files - Shortcodes',
+			'Shortcodes',
 			'upload_files',
 			'b2-private-files-code-page',
 			[&$this, 'render_code_page']
@@ -367,5 +367,9 @@ class B2_Private_Files_Admin {
 		$fileName = sanitize_file_name($_GET['fileName']);
 
 		include plugin_dir_path( __FILE__ ) . 'partials/code_page.php';
+	}
+
+	public function register_download_button_block(){
+		register_block_type( WP_PLUGIN_DIR . '/b2-private-files/build' );
 	}
 }
